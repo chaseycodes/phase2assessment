@@ -9,14 +9,16 @@
         </form>
         <h3>{{ message }}</h3>
     </div>
+    <h1>These are all the posts on the network</h1>
     <p>
         {% for item in posts %}
-            <p>"{{item}}"</p>
+            <p>"{{item}}"
+                <form action="/private/account" method="post">
+                    <input name="posts_button" type="submit" value="View {{item['pk']}}"><br />
+            </p>
             
         {% endfor %}
     </p>
-    <form action="/public/" method="post">
-        <input name="posts_button" type="submit" value="Register">
-      </form>
+    <p><a href="/public/register">Register</a></p>
 
 {% endblock %}

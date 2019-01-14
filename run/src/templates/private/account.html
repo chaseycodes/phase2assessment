@@ -4,13 +4,15 @@
             <p>Tweet</p>
             <form action="/private/account" method="post">
             <input name="post_text" type="text" placeholder="What's on your mind?">
+            <input name="img_text" type="text" placeholder="Attach an uploaded file">
             <input name="posts_button" type="submit" value="Post">
         </form>
+        <p>{{message}}</p>
         <p>
             {% for content in posts %}
             {{ content }}
             <form action="/private/account" method="post">
-            <input name="posts_button" type="submit" value="Delete"><br />
+            <input name="posts_button" type="submit" value="View {{content['pk']}}"><br />
             {% endfor %}
         </p>
     <title>Account Page</title>

@@ -16,8 +16,11 @@ UPLOAD_FOLDER = '/Users/ahn.ch/Desktop/facebook_mock/app/run/src/uploads'
 def index():
     if request.method == 'GET':
         with User() as un:
-            all_posts = un.get_every_post()
-            return render_template('public/index.html',posts=all_posts)
+            try:
+                all_posts = un.get_every_post()
+                return render_template('public/index.html',posts=all_posts)
+            except TypeError:
+                return render_template('public/index.html')
     elif request.method == 'POST':
         if request.form['posts_button'] == 'Login':
             with User(username=request.form['username'],password=request.form['password']) as un:
@@ -29,11 +32,10 @@ def index():
                         all_posts = un.get_every_post()
                         return redirect('private/account')
                     else:
-                        return render_template('public/index.html',message='Bad Credentials')
+                        return redirect('public.index',message='Bad Credentials')
                 except TypeError:
-                    return render_template('public/index.html')
-        elif request.form['posts_button'] == 'Register':
-            return render_template('public/register.html')
+                    all_posts = un.get_every_post()
+                    return render_template('public/index.html',posts=all_posts,message='Bad Credentials')
         else:
             pass
     else:

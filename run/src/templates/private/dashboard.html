@@ -1,11 +1,19 @@
 <!DOCTYPE html>
 <body>
+    <p>Search Tweets by Keyword</p>
     <form action="/private/dashboard" method="post">
-    <input name="content" type="text" placeholder="Search Posts">
-    <input name="posts_button" type="submit" value="search">
+    <input name="content" type="text" placeholder="Search Tweets">
+    <input name="posts_button" type="submit" value="search1">
 </body>
+<body>
+        <p>Search Tweets by User</p>
+        <form action="/private/dashboard" method="post">
+        <input name="user" type="text" placeholder="Search Tweets">
+        <input name="posts_button" type="submit" value="search2">
+    </body>
 <p>{{message}}</p>
 <body>
+    <h>---POSTS---</h>
     <form action="/private/dashboard" method="post">
     {% for item in posts %}
         <p>"{{item}}"</p>

@@ -22,6 +22,7 @@ def run(dbname='mock_fb.db'):
         time INTEGER,
         username VARCHAR,
         users_pk INTEGER,
+        filename VARCHAR,
         FOREIGN KEY(users_pk) REFERENCES users(pk)
     );""")
 

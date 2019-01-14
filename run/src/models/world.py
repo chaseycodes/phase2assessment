@@ -70,18 +70,21 @@ class User:
             val = (self.username,self.password)
             cur.execute(SQL,val)
     
-    def make_post(self,text,ts):
+    def make_post(self,text,ts,filename):
+        if filename == None:
+            self.filename = None
         p          = Posts()
         p.content  = text
         p.time     = ts
         p.username = session['username']
         p.users_pk = self.pk
+        p.filename = filename
         p.save()
  
     def get_posts(self):
         try:
             with OpenCursor() as cur:
-                SQL = """ SELECT * FROM posts WHERE users_pk=?; """
+                SQL = """ SELECT * FROM posts WHERE users_pk=? ORDER BY time DESC limit 10; """
                 val = (self.pk,)
                 cur.execute(SQL,val)
                 data = cur.fetchall()
@@ -89,6 +92,15 @@ class User:
                 return [Posts(rows) for rows in data]
         except TypeError:
             return render_template('private/account.html')
+
+    def get_user_posts(self,username):
+        with OpenCursor() as cur:
+            SQL = """ SELECT * FROM posts WHERE username=? ORDER BY time DESC limit 10; """
+            val = (username,)
+            cur.execute(SQL,val)
+            data = cur.fetchall()
+        if data:
+            return [Posts(rows) for rows in data]
     
     def search_keywords(self,x):
         with OpenCursor() as cur:
@@ -106,20 +118,28 @@ class User:
         if data:
             return [Posts(rows) for rows in data]
     
-    def repost(self, post_number,username):
+    def repost(self, post_number,username,filename):
         time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
         with OpenCursor() as cur:
             SQL = """ SELECT * FROM posts WHERE pk = ?
-                    ORDER BY time ASC; """
+                    ORDER BY time DESC; """
             cur.execute(SQL, (post_number,))
             row = cur.fetchone()
-            print(row[1])
             post = Posts()
             post.users_pk = self.pk
             post.content = 'Retweeted:'+str(row[1])
             post.username = username
             post.time = time
+            post.filename = filename
             post.save()
+
+    def get_filename(self, post_number):
+        with OpenCursor() as cur:
+            SQL = """ SELECT * FROM posts WHERE pk = ?
+                    ORDER BY time DESC; """
+            cur.execute(SQL, (post_number,))
+            row = cur.fetchone()
+            return row[5]
 
 class Posts:
 
@@ -132,11 +152,14 @@ class Posts:
             self.time     = row[2]
             self.username = row[3]
             self.users_pk = row[4]
+            self.filename = row[5]
         else:
             self.pk = None
             self.content = None
             self.time = None
             self.user_pk = None
+            self.username = None
+            self.filename = None
 
     def __bool__(self):
         return bool(self.pk)
@@ -153,9 +176,9 @@ class Posts:
     def save(self):
         with OpenCursor() as cur:
             SQL = """ INSERT INTO posts(
-                content,time,username,users_pk
-                ) VALUES (?,?,?,?); """
-            val = (self.content,self.time,self.username,self.users_pk)
+                content,time,username,users_pk,filename
+                ) VALUES (?,?,?,?,?); """
+            val = (self.content,self.time,self.username,self.users_pk,self.filename)
             cur.execute(SQL,val)
 
     def __repr__(self):
