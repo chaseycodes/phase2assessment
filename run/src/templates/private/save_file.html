@@ -1,0 +1,21 @@
+<h1>Upload new File</h1>
+    <form action="/save_file" method="post" enctype="multipart/form-data">
+      <input type="file" name="filename">
+      <input name="posts_button" type="submit" value="Upload">
+    </form>
+
+    <h1>IPFS</h1>
+    <form action="/save_file" method="post" enctype="multipart/form-data">
+      <input name="hash" type="text" placeholder="hash address">
+      <input name="filename" type="text" placeholder="filename">
+      <input name="posts_button" type="submit" value="Search">
+    </form>
+    <h1>View File</h1>
+    <form action="/save_file" method="post" enctype="multipart/form-data">
+      <input name="view_filename" type="text" placeholder="filename">
+      <input name="posts_button" type="submit" value="View File">
+    </form>
+    <p>{{ message }}</p>
+    
+    <p><a href="/private/account">Return to Account</a></p>
+    </div>

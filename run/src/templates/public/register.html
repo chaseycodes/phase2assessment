@@ -1,0 +1,13 @@
+{% extends "structure.html" %}
+{% block viewport %}
+    <p>Register</p>
+    <div>
+        <form action="/public/register" method="post">
+            <input name="username" type="text" autofocus required>
+            <input name="password" type="text" autofocus required>
+            <input type="submit" value="Submit">
+        </form>
+        <h3>{{ message }}</h3>
+    </div>
+    <p><a href="/public/">Home</a></p>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "structure.html" %}
+{% block viewport %}
+    <p>Log In</p>
+    <div>
+        <form action="/public/" method="post">
+            <input name="username" type="text" autofocus required>
+            <input name="password" type="text" autofocus required>
+            <input name="posts_button" type="submit" value="Login">
+        </form>
+        <h3>{{ message }}</h3>
+    </div>
+    <p>
+        {% for item in posts %}
+            <p>"{{item}}"</p>
+            
+        {% endfor %}
+    </p>
+    <form action="/public/" method="post">
+        <input name="posts_button" type="submit" value="Register">
+      </form>
+
+{% endblock %}

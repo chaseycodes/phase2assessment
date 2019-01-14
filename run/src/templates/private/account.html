@@ -1,0 +1,25 @@
+<p>Account</p>
+    <div>
+        <form action="/private/account" method="post">
+            <p>Tweet</p>
+            <form action="/private/account" method="post">
+            <input name="post_text" type="text" placeholder="What's on your mind?">
+            <input name="posts_button" type="submit" value="Post">
+        </form>
+        <p>
+            {% for content in posts %}
+            {{ content }}
+            <form action="/private/account" method="post">
+            <input name="posts_button" type="submit" value="Delete"><br />
+            {% endfor %}
+        </p>
+    <title>Account Page</title>
+    <h1>Upload File</h1>
+    <form action="/private/account" method="post" enctype="multipart/form-data">
+      <input name="posts_button" type="submit" value="Upload">
+    </form>
+    <p><a href="/private/dashboard">Search Posts</a></p>
+    <p><a href="/public/">Return</a></p>
+    </div>
+    <form action="/private/account" method="post">
+        <input name="posts_button" type="submit" value="Logout">

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<body>
+    <form action="/private/dashboard" method="post">
+    <input name="content" type="text" placeholder="Search Posts">
+    <input name="posts_button" type="submit" value="search">
+</body>
+<p>{{message}}</p>
+<body>
+    <form action="/private/dashboard" method="post">
+    {% for item in posts %}
+        <p>"{{item}}"</p>
+        <input name="posts_button" type="submit" value="Repost {{item['pk']}}">
+        <!--<input type="hidden" name="ID" value="this is {{item}}">-->
+    {% endfor %}
+</body>
+<p><a href="/private/account">Back To Account</a></p>
